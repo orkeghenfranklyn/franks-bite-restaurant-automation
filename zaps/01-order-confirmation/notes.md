@@ -45,4 +45,4 @@ Test emails went to my own address, because the sample customer emails use examp
 **Email received**
 
 
-![Email received](zap1-email-received.jpg)
+![Email received](zap1-email-recieved.jpg)

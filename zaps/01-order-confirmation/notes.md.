@@ -1,34 +1,53 @@
 # Zap 1: Order Confirmation Email
 
-**Goal:** Automatically email a customer a confirmation when a new order is added to the orders sheet.
+**Business problem:** Customers who order from Frankie's Bite get no instant confirmation, so they call or message to ask if their order was received.
 
-**Trigger:** Google Sheets, New Spreadsheet Row (`orders` tab)
-**Action:** Gmail, Send Email
-**Test data:** Synthetic Frankie's Bite orders. Customer emails use example.com, so I sent test emails to my own address.
+**Solution:** A Zap that emails the customer a confirmation as soon as a new order row is added to the orders sheet.
 
-## Problems I hit
-1. The first test email had a repeated, cut-off field in the body ("deliverydeliverydel").
-2. The order ID showed as "0005" instead of the full ID (ORD-00005).
-3. The amount used "#" instead of the naira sign (₦).
-4. The wording said "total amount paid" and "ready for delivery". That is wrong for a new order, because payment hasn't been confirmed and the food isn't ready yet.
-5. The subject line was just "Order confirmed", with no order ID.
+**Tools:** Zapier, Google Sheets, Gmail
+**Test data:** Synthetic Frankie's Bite orders (customer emails use example.com, so I sent test emails to my own address).
 
-## How I fixed them
-1. Removed the duplicate field and inserted each field once from the data picker.
-2. Mapped the `order_id` field so the full ID appears.
-3. Used ₦ before the total.
-4. Reworded the body to "We've received your order" and "Your total is ₦...".
-5. Changed the subject to "Order confirmed: [order_id]".
+## Workflow
+1. **Trigger:** Google Sheets, New Spreadsheet Row (`orders` tab)
+2. **Action:** Gmail, Send Email. The subject and body are built from the order data (order ID, customer name, order type, total).
+
+## Email sent
+- **Subject:** Order confirmed: [order_id]
+- **Body:** Greets the customer by name, confirms the order was received, and shows the order ID, type and total in naira (₦).
+
+## Problems I hit and how I fixed them
+| # | Problem | Fix |
+|---|---------|-----|
+| 1 | The first test email repeated and cut off a field in the body ("deliverydeliverydel") | Removed the duplicate and inserted each field once from the data picker |
+| 2 | The order ID showed as "0005" instead of "ORD-00005" | Mapped the `order_id` field so the full ID appears |
+| 3 | The amount used "#" instead of the naira sign | Used ₦ before the total |
+| 4 | The wording said "total amount paid" and "ready for delivery", which is wrong for a new order | Reworded to "We've received your order" and "Your total is ₦..." |
+| 5 | The subject had no order ID | Changed it to "Order confirmed: [order_id]" |
 
 ## Result
-The Zap is published and tested. A new row in the sheet sends a confirmation email within a few minutes. Zap History shows a successful run.
+The Zap is published and tested. Adding a new row to the sheet sends a confirmation email within a few minutes, and Zap History shows a successful run.
+
+## What I learned
+- Always test with real sample data, because the first email exposed mistakes I couldn't see in the editor.
+- Confirmation wording must match the order stage. Claiming "paid" or "ready" too early would mislead customers.
+- Fields should be inserted from the data picker, not typed by hand.
 
 ## What I'd improve
 - Format the estimated time with a Formatter (Date/Time) step instead of showing a raw timestamp.
-- Add a Filter so cancelled orders don't get a confirmation.
+- Add a Filter so cancelled orders don't get a confirmation (I did this in Zap 2).
 - Send to the real customer email in production, rather than my test address.
 - Add an error alert if the Gmail step fails.
 
 ## Screenshots
-- `zap1-canvas.png`
-- `zap1-email-received.png`
+**Zap canvas**
+
+
+![Zap canvas](zap1-canvas.png)
+
+
+
+
+**Email received**
+
+
+![Email received](zap1-email-received.png)

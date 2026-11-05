@@ -1,41 +1,37 @@
 # Zap 1: Order Confirmation Email
 
-**Business problem:** Customers who order from Frankie's Bite get no instant confirmation, so they call or message to ask if their order was received.
+| | |
+|---|---|
+| **Business** | Frankie's Bite (synthetic data), Yenagoa |
+| **Tools** | Zapier, Google Sheets, Gmail |
+| **Trigger** | Google Sheets, New Spreadsheet Row (`orders` tab) |
+| **Action** | Gmail, Send Email |
+| **Status** | Published and tested |
 
-**Solution:** A Zap that emails the customer a confirmation as soon as a new order row is added to the orders sheet.
+## The problem
+Customers get no instant confirmation after ordering, so they call or message to ask if their order was received.
 
-**Tools:** Zapier, Google Sheets, Gmail
-**Test data:** Synthetic Frankie's Bite orders (customer emails use example.com, so I sent test emails to my own address).
+## The solution
+When a new order row is added to the sheet, the Zap emails the customer a confirmation. The subject is `Order confirmed: [order_id]`, and the body greets the customer by name and shows the order ID, type and total in naira (₦).
 
-## Workflow
-1. **Trigger:** Google Sheets, New Spreadsheet Row (`orders` tab)
-2. **Action:** Gmail, Send Email. The subject and body are built from the order data (order ID, customer name, order type, total).
+Test emails went to my own address, because the sample customer emails use example.com.
 
-## Email sent
-- **Subject:** Order confirmed: [order_id]
-- **Body:** Greets the customer by name, confirms the order was received, and shows the order ID, type and total in naira (₦).
-
-## Problems I hit and how I fixed them
-| # | Problem | Fix |
-|---|---------|-----|
-| 1 | The first test email repeated and cut off a field in the body ("deliverydeliverydel") | Removed the duplicate and inserted each field once from the data picker |
-| 2 | The order ID showed as "0005" instead of "ORD-00005" | Mapped the `order_id` field so the full ID appears |
-| 3 | The amount used "#" instead of the naira sign | Used ₦ before the total |
-| 4 | The wording said "total amount paid" and "ready for delivery", which is wrong for a new order | Reworded to "We've received your order" and "Your total is ₦..." |
-| 5 | The subject had no order ID | Changed it to "Order confirmed: [order_id]" |
-
-## Result
-The Zap is published and tested. Adding a new row to the sheet sends a confirmation email within a few minutes.
+## What went wrong, and how I fixed it
+- **Repeated, cut-off text in the email** ("deliverydeliverydel"). I removed the duplicate and inserted each field once from the data picker.
+- **Order ID showed as "0005"** instead of "ORD-00005". I mapped the `order_id` field so the full ID appears.
+- **Amount used "#"**. I switched to the naira sign (₦).
+- **Wrong wording** ("total amount paid", "ready for delivery"). This is misleading for a new order, so I changed it to "We've received your order" and "Your total is ₦...".
+- **Subject had no order ID**. I added `[order_id]` to the subject.
 
 ## What I learned
-- Always test with real sample data, because the first email exposed mistakes I couldn't see in the editor.
-- Confirmation wording must match the order stage. Claiming "paid" or "ready" too early would mislead customers.
-- Fields should be inserted from the data picker, not typed by hand.
+- Test with real sample data. The first email showed mistakes I couldn't see in the editor.
+- Wording must match the order stage. Saying "paid" or "ready" too early misleads customers.
+- Insert fields from the data picker instead of typing them by hand.
 
-## What I'd improve
-- Format the estimated time with a Formatter (Date/Time) step instead of showing a raw timestamp.
-- Add a Filter so cancelled orders don't get a confirmation (I did this in Zap 2).
-- Send to the real customer email in production, rather than my test address.
+## Next improvements
+- Format the estimated time with a Formatter (Date/Time) step instead of a raw timestamp.
+- Skip cancelled orders with a Filter (done in Zap 2).
+- Send to the real customer email in production.
 - Add an error alert if the Gmail step fails.
 
 ## Screenshots

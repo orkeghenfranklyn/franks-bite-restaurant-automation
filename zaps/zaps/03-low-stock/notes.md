@@ -47,9 +47,9 @@ A formula in the sheet sets `stock_status` to LOW when `current_stock` falls to 
 
 
 
-![Run history](zap3-run-history.jpg)
+![Run history](zap3-run-history.png)
 
 
 
 
-![Email received](z3-email-received.jpg)
+![Email received](z3-email-recieved.png)

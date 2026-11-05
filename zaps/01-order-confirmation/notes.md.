@@ -25,7 +25,7 @@
 | 5 | The subject had no order ID | Changed it to "Order confirmed: [order_id]" |
 
 ## Result
-The Zap is published and tested. Adding a new row to the sheet sends a confirmation email within a few minutes, and Zap History shows a successful run.
+The Zap is published and tested. Adding a new row to the sheet sends a confirmation email within a few minutes.
 
 ## What I learned
 - Always test with real sample data, because the first email exposed mistakes I couldn't see in the editor.
@@ -42,12 +42,11 @@ The Zap is published and tested. Adding a new row to the sheet sends a confirmat
 **Zap canvas**
 
 
-![Zap canvas](zap1-canvas.png)
-
+![Zap canvas](zap1-canvas.jpg)
 
 
 
 **Email received**
 
 
-![Email received](zap1-email-received.png)
+![Email received](zap1-email-received.jpg)

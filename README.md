@@ -146,6 +146,6 @@ data/      synthetic datasets
 <div align="center">
 
 **Orkeghen Franklyn** · Workflow automation and AI operations
-[LinkedIn](www.linkedin.com/in/franklyn-orkeghen-34bb40441) · [Email](orkeghenfranklyn@gmail.com) · Open to remote roles
+[[LinkedIn](https://www.linkedin.com/in/franklyn-orkeghen-34bb40441/) · [Email](orkeghenfranklyn@gmail.com) · Open to remote roles
 
 </div>

@@ -19,7 +19,7 @@ I split the work on purpose: the sheet does the counting and Zapier does the sch
 For 4 Nov 2026 the email showed 7 orders, 1 cancelled, ₦73,900 revenue and WhatsApp as the busiest channel. These match an independent check with a Python script.
 
 ## What went wrong, and how I fixed it
-(Write your own. For example: the date had to be stored as text, so I used an apostrophe.)
+All tests ran smoothly
 
 ## Limitations
 - The data ends on 4 Nov 2026, so I typed a fixed test date. In production, a Formatter step would insert yesterday's date.

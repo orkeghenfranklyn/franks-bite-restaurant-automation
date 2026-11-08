@@ -37,6 +37,8 @@ All tests ran smoothly
 - Send the summary to Telegram or WhatsApp.
 - Weekly and monthly versions.
 
+Verification: `scripts/daily_summary.py` recomputes the same figures from the CSV files and matches the email.
+
 ## Screenshots
 
 

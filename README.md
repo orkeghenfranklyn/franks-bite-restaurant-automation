@@ -3,7 +3,7 @@
 # 🍲 Frankie's Bite
 ### Restaurant operations on autopilot
 
-**Eight production-style workflows that turn WhatsApp chaos into confirmed orders, matched payments and a self-reporting business, built entirely on free tools.**
+**Eight workflows that turn WhatsApp chaos into confirmed orders, matched payments and a self-reporting business, built entirely on free tools.**
 
 
 
@@ -36,7 +36,9 @@
 
 
 
-[Demo video](#) · [The 8 workflows](#the-8-workflows) · [Engineering decisions](#engineering-decisions) · [Results](#results)
+[The 8 workflows](#the-8-workflows) · [Engineering decisions](#engineering-decisions) · [Results](#results) · [Limitations](#honest-limitations)
+
+*Demo video: coming soon*
 
 </div>
 
@@ -49,43 +51,38 @@ Frankie's Bite is a fictional restaurant built to practise exactly that reality:
 
 ## What I built
 A connected set of automations that handle the repetitive work and **hand anything uncertain to a human**.
-```mermaid
-flowchart LR
-  A1["New orders"] --> S["Google Sheets"]
-  A2["Bank alerts"] --> S
-  A3["Customer messages"] --> S
-  A4["Deliveries"] --> S
-  A5["Complaints"] --> S
-  A6["Daily schedule"] --> S
-  S --> Z["Zapier: filters, lookups, paths"]
-  Z --> O1["Customer and staff emails"]
-  Z --> O2["Audit logs"]
-  Z --> O3["Human review queue"]
-```
 
-```mermaid
-flowchart TD
-  A["Bank alert arrives"] --> B["Extract bank reference with regex"]
-  B --> C["Look up payment, then order"]
-  C --> D{"Order found?"}
-  D -->|No| E["Manager review: unmatched"]
-  D -->|Yes| F{"Amount equals order total?"}
-  F -->|Yes| G["Log as paid"]
-  F -->|No| H["Manager review: underpaid or overpaid, email sent"]
+```
+INPUTS                          PROCESSING                    OUTPUTS
+
+New orders ------------+
+Bank alerts -----------+
+Customer messages -----+--> Google Sheets --> Zapier --+--> Customer and staff emails
+Deliveries ------------+                                +--> Audit logs
+Complaints ------------+                                +--> Human review queue
+Daily schedule --------+
 ```
 
 ### Deep dive: payment matching
-Real bank alerts are messy, so matching works in tiers and fails safe.
+Real bank alerts are messy, so matching works in steps and fails safe.
 
-```mermaid
-flowchart TD
-  A[Bank alert arrives] --> B[Extract bank reference with regex]
-  B --> C[Look up payment, then order]
-  C --> D{Order found?}
-  D -- No --> E[Manager review: unmatched]
-  D -- Yes --> F{Amount equals order total?}
-  F -- Yes --> G[Log as paid]
-  F -- No --> H[Manager review: underpaid or overpaid, email sent]
+```
+Bank alert arrives
+      |
+      v
+Extract bank reference (regex)
+      |
+      v
+Look up payment, then order
+      |
+      +-- Order NOT found ---------> Manager review: unmatched
+      |
+      +-- Order found
+            |
+            +-- Amount equals total --> Log as paid
+            |
+            +-- Amount differs -------> Manager review + email
+                                        (underpaid or overpaid)
 ```
 
 ## The 8 workflows
@@ -133,10 +130,10 @@ Synthetic and reproducible, in [`data/`](data): 100 customers, a 40-item Nigeria
 3. Test each record once, because each test run writes real rows.
 
 ## Skills demonstrated
-Workflow automation · API-style data handling · Regex extraction · Conditional logic and branching · Data lookup and joins · Exception handling and human-in-the-loop design · Synthetic data design · Testing and verification · Technical documentation
+Workflow automation, API-style data handling, regex extraction, conditional logic and branching, data lookup and joins, exception handling and human-in-the-loop design, synthetic data design, testing and verification, technical documentation.
 
 ## Roadmap
-- [ ] Rebuild two workflows in n8n and Make
+- [ ] Rebuild two workflows in Make and n8n
 - [ ] Add an AI step behind the rules for unclear messages
 - [ ] Telegram channel for staff alerts
 - [ ] Duplicate-payment protection
@@ -150,9 +147,7 @@ data/      synthetic datasets
 
 ---
 
-<div align="center">
 
 **Orkeghen Franklyn** · Workflow automation and AI operations
 [LinkedIn](https://www.linkedin.com/in/franklyn-orkeghen-34bb40441/) · [Email](orkeghenfranklyn@gmail.com) · Open to remote roles
 
-</div>

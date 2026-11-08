@@ -49,22 +49,29 @@ Frankie's Bite is a fictional restaurant built to practise exactly that reality:
 
 ## What I built
 A connected set of automations that handle the repetitive work and **hand anything uncertain to a human**.
-
 ```mermaid
 flowchart LR
-  subgraph IN[Inputs]
-    A1[New orders]
-    A2[Bank alerts]
-    A3[Customer messages]
-    A4[Deliveries]
-    A5[Complaints]
-    A6[Daily schedule]
-  end
-  IN --> S[(Google Sheets)]
-  S --> Z{{Zapier: filters, lookups, paths}}
-  Z --> O1[Customer and staff emails]
-  Z --> O2[Audit logs]
-  Z --> O3[Human review queue]
+  A1["New orders"] --> S["Google Sheets"]
+  A2["Bank alerts"] --> S
+  A3["Customer messages"] --> S
+  A4["Deliveries"] --> S
+  A5["Complaints"] --> S
+  A6["Daily schedule"] --> S
+  S --> Z["Zapier: filters, lookups, paths"]
+  Z --> O1["Customer and staff emails"]
+  Z --> O2["Audit logs"]
+  Z --> O3["Human review queue"]
+```
+
+```mermaid
+flowchart TD
+  A["Bank alert arrives"] --> B["Extract bank reference with regex"]
+  B --> C["Look up payment, then order"]
+  C --> D{"Order found?"}
+  D -->|No| E["Manager review: unmatched"]
+  D -->|Yes| F{"Amount equals order total?"}
+  F -->|Yes| G["Log as paid"]
+  F -->|No| H["Manager review: underpaid or overpaid, email sent"]
 ```
 
 ### Deep dive: payment matching
@@ -146,6 +153,6 @@ data/      synthetic datasets
 <div align="center">
 
 **Orkeghen Franklyn** · Workflow automation and AI operations
-[[LinkedIn](https://www.linkedin.com/in/franklyn-orkeghen-34bb40441/) · [Email](orkeghenfranklyn@gmail.com) · Open to remote roles
+[LinkedIn](https://www.linkedin.com/in/franklyn-orkeghen-34bb40441/) · [Email](orkeghenfranklyn@gmail.com) · Open to remote roles
 
 </div>

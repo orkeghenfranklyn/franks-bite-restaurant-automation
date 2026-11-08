@@ -38,7 +38,7 @@
 
 [The 8 workflows](#the-8-workflows) · [Engineering decisions](#engineering-decisions) · [Results](#results) · [Limitations](#honest-limitations)
 
-*Demo video: coming soon*
+*Demo video: [watch here]* (https://youtu.be/XyfeHN3IKj8?si=0qDV6QOqSe7h9Sld)
 
 </div>
 
